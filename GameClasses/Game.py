@@ -1,76 +1,16 @@
 import pygame
 import random
 import time
-import Pikachu
-
-imageBackground = (246,246,246)
+from Pikachu import Pikachu
+from Zubat import Zubat
+from Bullet import Bullet
+from Background import Background
 
 #lastHit=1 for right and 0 for left
 lastHit=1
 
 done=False
 isMuted=False
-
-
-
-
-#same as pikachu class but for the zubats
-class Zubat(pygame.sprite.Sprite):
-    speed = 0
-    currentImage=0
-    def __init__(self):
-
-        pygame.sprite.Sprite.__init__(self)
-
-        self.zubs=[]
-
-        for i in range (1,9):
-            tempZub = pygame.image.load("zub"+str(i)+".png").convert()
-            tempZub.set_colorkey((255,128,0))
-            self.zubs.append(tempZub)
-
-        self.image=self.zubs[5]
-        self.rect = self.image.get_rect()
-
-    def update(self):
-        if self.speed<0:
-            self.currentImage+=1
-            if self.currentImage >3*4:
-                self.currentImage=0
-            self.image=self.zubs[self.currentImage//4]
-        elif self.speed>0:
-            self.currentImage+=1
-            if self.currentImage >3*4:
-                self.currentImage=0
-            self.image=self.zubs[self.currentImage//4+4]
-
-
-
-#Controls the ligthning bolt
-class Bullet(pygame.sprite.Sprite):
-    #Holds speed so the bolt always goes the direction it was shot
-    speed = 0
-    def __init__(self):
-
-        pygame.sprite.Sprite.__init__(self)
-
-        #Reads in the picture for the bullet
-        self.image = pygame.image.load("bolt.png")
-        self.image.set_colorkey(imageBackground)
-        self.rect = self.image.get_rect()
-
-#Makes the background into a sprite image
-class Background(pygame.sprite.Sprite):
-
-    def __init__(self):
-
-        pygame.sprite.Sprite.__init__(self)
-
-        #Reads in the picture for the bullet
-        self.image = pygame.image.load("moon.jpg")
-        self.image.set_colorkey(imageBackground)
-        self.rect = self.image.get_rect()
-
 
 #Function that does all the programming for the game.  Starts a window
 #Has end game game takes in initials and displays them to the screen
@@ -132,7 +72,6 @@ def Game():
         #Opens the HighScore file for reading
         highScore=open('HighScore.txt','r')
 
-
         fileLine=0
         firstline=""
         highScores={}
@@ -166,7 +105,6 @@ def Game():
         #then will bump the person at the spot move down one
         for x in range((len(highScores))):
             if (highScores[str(len(highScores)-x)+")"][2]<player.pikaScore):
-                makelist=True
                 highScores[str(len(highScores)-x+1)+")"]=highScores[str(len(highScores)-x)+")"]
                 highScores[str(len(highScores)-x)+")"]=playerStats
 
@@ -308,9 +246,6 @@ def Game():
     all_sprites_list = pygame.sprite.RenderPlain()
 
     playerList= pygame.sprite.RenderPlain()
-
-
-    font = pygame.font.Font(None, 36)
 
     # Create a pikachu player
     player = Pikachu()
@@ -491,7 +426,7 @@ def Game():
                     numOfZubats+=1
             #Checks the position of Pikachu, when Pikachu goes
             #off the screen he will loop around to the opposite end of the screen
-            for players in playerList:
+            for player in playerList:
                 if(player.rect.x <0-player.rect.width):
                     player.rect.x=screen_width
                 if(player.rect.x >screen_width):
@@ -507,8 +442,8 @@ def Game():
                 #checks the x postion of zubat and pikachu and moves zubat towards pikachu
                 #also sets the speed which is used to flip the zubat picture opsite direction
                 if(zubat.rect.x+(zubat.rect.width/2)>player.rect.x+(player.rect.width/2)):
-                   zubat.rect.x-=2
-                   zubat.speed=-1
+                    zubat.rect.x-=2
+                    zubat.speed=-1
                 elif(zubat.rect.x+(zubat.rect.width/2)<player.rect.x+(player.rect.width/2)):
                     zubat.rect.x+=2
                     zubat.speed=1
@@ -576,7 +511,7 @@ def Game():
 
 #Loads and plays background music
 pygame.mixer.init()
-pygame.mixer.music.load("music.mp3")
+pygame.mixer.music.load("Music/music.mp3")
 pygame.mixer.music.play(-1,0.5)
 Game()
 
