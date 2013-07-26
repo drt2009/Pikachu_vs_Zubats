@@ -3,6 +3,7 @@ import pygame
 class Zubat(pygame.sprite.Sprite):
     speed = 0
     currentImage=0
+    
     def __init__(self):
 
         pygame.sprite.Sprite.__init__(self)
@@ -17,16 +18,14 @@ class Zubat(pygame.sprite.Sprite):
         self.image=self.zubs[5]
         self.rect = self.image.get_rect()
 
-    def update(self):
+    def selectPicture(self):
+        self.currentImage+=1
+        if self.currentImage >3*4:
+            self.currentImage=0
+        #Starts back at the beginning of the image for that direction
         if self.speed<0:
-            self.currentImage+=1
-            if self.currentImage >3*4:
-                self.currentImage=0
             self.image=self.zubs[self.currentImage//4]
         elif self.speed>0:
-            self.currentImage+=1
-            if self.currentImage >3*4:
-                self.currentImage=0
             self.image=self.zubs[self.currentImage//4+4]
 
 

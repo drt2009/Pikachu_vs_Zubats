@@ -8,7 +8,6 @@ from Background import Background
 
 #lastHit=1 for right and 0 for left
 lastHit=1
-
 done=False
 isMuted=False
 
@@ -240,7 +239,8 @@ def Game():
     backgroundPlain = pygame.sprite.RenderPlain()
     backgroundPlain.add(background)
 
-
+    #draws the background to the screen
+    backgroundPlain.draw(screen)
 
     # This is a list of every sprite.
     all_sprites_list = pygame.sprite.RenderPlain()
@@ -263,8 +263,7 @@ def Game():
     bulletListLeft= pygame.sprite.RenderPlain()
     zubats=pygame.sprite.RenderPlain()
 
-    #draws the background to the screen
-    backgroundPlain.draw(screen)
+   
 
     while True:
 
@@ -476,7 +475,7 @@ def Game():
                         score=random.randrange(75,125)
                         player.pikaScore+=score
                 #Calls the update to move them and check to see if the picture needs flipping
-                zubat.update()
+                zubat.selectPicture()
             #These two for loops move the bullets o
             for bullet in bulletListRight:
                 bullet.rect.x += bullet.speed
@@ -490,7 +489,7 @@ def Game():
 
             # Clear the screen
             screen.fill((0,0,0))
-            player.update()
+            player.selectPicture()
             backgroundPlain.draw(screen)
             # Draw all the spites
             all_sprites_list.draw(screen)
@@ -508,14 +507,3 @@ def Game():
             player.level+=1
 
     pygame.quit()
-
-#Loads and plays background music
-pygame.mixer.init()
-pygame.mixer.music.load("Music/music.mp3")
-pygame.mixer.music.play(-1,0.5)
-Game()
-
-
-
-
-
