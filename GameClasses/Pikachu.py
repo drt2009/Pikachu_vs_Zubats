@@ -6,7 +6,7 @@ class Pikachu(pygame.sprite.Sprite):
     y_speed=0
     currentImage=0
     pikaScore=0
-    level=1
+    level=0
 
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)

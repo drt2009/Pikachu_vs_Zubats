@@ -66,7 +66,6 @@ def Game():
                     if count==3:
                         askForInitials()
                         initialsEntered=True
-                        break
 
         #Opens the HighScore file for reading
         highScore=open('HighScore.txt','r')
@@ -107,16 +106,7 @@ def Game():
                 highScores[str(len(highScores)-x+1)+")"]=highScores[str(len(highScores)-x)+")"]
                 highScores[str(len(highScores)-x)+")"]=playerStats
 
-        #Opens a high score list for writing that will delete the old list
-        #then replace it with the new names that go on it
-        highScore=open('HighScore.txt','w')
-        highScore.write(firstline)
-        for x in range(1,11):
-            highScore.write(str(x)+")\t\t"+highScores[str(x)+")"][0]+"\t\t"\
-                            +highScores[str(x)+")"][1]+"\t\t"+str(highScores[str(x)+")"][2])+"\t\t\n")
-
-        #closes the high score list
-        highScore.close()
+        
 
         while playAgain==False:
             myfont = pygame.font.Font(None, 36)
@@ -216,15 +206,12 @@ def Game():
                 break
 
     # Initialize Pygame
-    pygame.init()
 
     # Set the height and width of the screen
     screen_width=700
     screen_height=500
     screen=pygame.display.set_mode([screen_width,screen_height])
 
-    #Sets the game window title
-    pygame.display.set_caption("Pikachu vs. Zubats")
 
     #calls the instructions which will print the instructions to the screen
     instructions()
@@ -263,8 +250,8 @@ def Game():
     bulletListLeft= pygame.sprite.RenderPlain()
     zubats=pygame.sprite.RenderPlain()
 
-    while True:
-
+    while not done:
+        player.level+=1
         #Counts the number of zubats that were sent out in the current level
         numOfZubats=0
 
@@ -299,6 +286,7 @@ def Game():
         # -------- Main Program Loop -----------
         while done==False:
 
+            
             myfont = pygame.font.Font(None, 24)
             text = myfont.render(("Score: "+str(player.pikaScore))\
                                     , True, (180,0,16))
@@ -321,17 +309,17 @@ def Game():
                     if event.key == pygame.K_LEFT:
                         player.changespeed(-4,0)
                         lastHit=0
-                    if event.key == pygame.K_RIGHT:
+                    elif event.key == pygame.K_RIGHT:
                         player.changespeed(4,0)
                         lastHit=1
-                    if event.key == pygame.K_UP:
+                    elif event.key == pygame.K_UP:
                         player.changespeed(0,-3)
-                    if event.key == pygame.K_DOWN:
+                    elif event.key == pygame.K_DOWN:
                         player.changespeed(0,3)
 
                     #Checks to see if space is pressed, if it is and the number of bullets in the direct is not
                     #already maxed out will shoot a bullet in the last direction pikachu was facing
-                    if event.key == pygame.K_SPACE:
+                    elif event.key == pygame.K_SPACE:
                         bullet=Bullet()
                         if lastHit==1:
                             bullet.speed=(5+(player.x_speed/2.0))
@@ -499,9 +487,5 @@ def Game():
             pygame.display.flip()
             if(len(zubats)==0 and numOfZubats==maxZubatsPerLevel):
                 break
-        if(done==True):
-            break
-        else:
-            player.level+=1
-
-    pygame.quit()
+    return
+            
