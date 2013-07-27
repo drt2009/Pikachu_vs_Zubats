@@ -263,8 +263,6 @@ def Game():
     bulletListLeft= pygame.sprite.RenderPlain()
     zubats=pygame.sprite.RenderPlain()
 
-   
-
     while True:
 
         #Counts the number of zubats that were sent out in the current level
