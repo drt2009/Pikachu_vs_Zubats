@@ -3,15 +3,15 @@ def HighScore(initials, player):
     #Opens the HighScore file for reading
     highScore=open('HighScore.txt','r')
 
-    fileLine=0
+    isFirstLine = True
     firstline=""
     highScores={}
     #Reads in the file
     for line in highScore:
         #Reads in the header line
-        if(fileLine==0):
+        if(isFirstLine):
             firstline=line
-            fileLine+=1
+            isFirstLine = False
             continue
         #Gets the name,level, and score of the players
         temp=[]
@@ -33,8 +33,9 @@ def HighScore(initials, player):
     playerStats.append(player.pikaScore)
 
     #goes through the dictionary and sees where the current player needs to get added
-    #then will bump the person at the spot move down one
-    for x in range((len(highScores))):
+    #then will bump the person at the spot down one
+    for x in range((len(highScores))+1):
+        print highScores[str(len(highScores)-x)+")"]
         if (highScores[str(len(highScores)-x)+")"][2]<player.pikaScore):
             highScores[str(len(highScores)-x+1)+")"]=highScores[str(len(highScores)-x)+")"]
             highScores[str(len(highScores)-x)+")"]=playerStats
